@@ -1,0 +1,16 @@
+{
+  "name": "typescript-zero-to-hero",
+  "version": "1.0.0",
+  "description": "TypeScript excercises to level up your knowledge and skills",
+  "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/mateuszmichi/TypeScriptZeroToHero.git",
+  "author": "Mateusz Michalewski <37980373+mateuszmichi@users.noreply.github.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

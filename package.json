@@ -10,7 +10,17 @@
   "engines": {
     "node": ">=14.17.0"
   },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.1",
+    "prettier": "^3.0.3",
     "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "format": "lint-staged",
+    "prepare": "husky install"
   }
 }

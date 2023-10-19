@@ -1,6 +1,6 @@
 // Basic types
 
-// Replace all existing occurrence of this type with proper types
+// Replace all existing occurrences of this type with proper types
 type XYZ = unknown;
 
 // Basic data types
@@ -8,8 +8,8 @@ function Exercise1() {
   const price: XYZ = 10.12;
   const description: XYZ = "Total sum";
   const isOverHalf: XYZ = Math.random() > 0.5;
-  // Just as remainder, this code does not makes sence :)
-  const nullAbleNull: XYZ = null;
+  // Just as a reminder, this code does not make sense :)
+  const nullableNull: XYZ = null;
   const undefinedUndefined: XYZ = undefined;
 }
 
@@ -33,12 +33,12 @@ function Exercise3() {
 
 // Tuples
 function Exercise4() {
-  // Make this code not throwing error
+  // Make this code not throw an error
   function createTuple() {
     const result: XYZ = ["UserName", 100];
     return result;
   }
 
   const [username, age] = createTuple();
-  console.log(username.toLowerCase(), "has age", age.toFixed());
+  console.log(username.toLowerCase(), "has an age of", age.toFixed());
 }

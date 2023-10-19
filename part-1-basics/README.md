@@ -11,4 +11,4 @@ Exercises will cover the fundamentals of this language, such as basic types, fun
 
 ## Exercises
 
-You can go through them step by step or choose the most interesting topics. The `CheatSheet.md` file will contain a cheat sheet covering all topics.
+You can go through them step by step or choose the most interesting topics. The [CheatSheet.md](https://github.com/mateuszmichi/TypeScriptZeroToHero/blob/main/part-1-basics/CheatSheet.md#basics-cheat-sheet) file will contain a cheat sheet covering all topics.

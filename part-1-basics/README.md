@@ -1,4 +1,4 @@
-# TypeScript Basics
+# TypeScript Fundamentals
 
 ## Prerequisites
 

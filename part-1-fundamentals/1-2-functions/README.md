@@ -132,12 +132,12 @@ The same applies to classic functions.
 
 ```ts
 type NestedArraysType = NestedArraysType[] | string;
-const flattenArray = (input: NestedArraysType): string => {
+function flattenArray(input: NestedArraysType): string {
   if (typeof input === "string") return input;
   // Without the definition of the return type, TypeScript will not be able to detect
   // the return type of a self-referencing expression
   return input.map((element) => flattenArray(element)).join();
-};
+}
 
 // By default, TypeScript will resolve the return type as a generic string
 function getAction(): "get" | "post" {
@@ -295,7 +295,7 @@ type FailingType2 = (x: number | string, y: number[]) => string | number | null;
 const failingType2: FailingType2 = (x, y) => null;
 callbacksV2(failingType2); // Error
 
-// Function requires arguments
+// Function requires more arguments
 type FailingType3 = (
   x: number | string,
   y: number[],

@@ -72,12 +72,12 @@ There are two ways to define arrays in TypeScript, and they are interchangeable.
 ```ts
 // Using [] syntax
 const numberList: number[] = [1, 3];
-const numberOrStringList: (number | string)[] = [1, 3];
+const numberOrStringList: (number | string)[] = [1, "3"];
 const booleanList: boolean[] = [true, false, true];
 
 // Using Array<> template
 const numberList: Array<number> = [1, 3];
-const numberOrStringList: Array<number | string> = [1, 3];
+const numberOrStringList: Array<number | string> = [1, "3"];
 const booleanList: Array<boolean> = [true, false, true];
 ```
 

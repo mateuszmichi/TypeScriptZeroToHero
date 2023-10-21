@@ -70,7 +70,9 @@ type IndexSignatureType = {
 };
 // When using Record, we need to use Partial to mark keys as optional
 // This utility will be covered later
-type IndexSignatureType2 = Partial<Record<HttpMethodType, Promise<unknown>>>;
+type IndexSignatureType2 = Partial<
+  Record<HttpMethodType, () => Promise<unknown>>
+>;
 ```
 
 When using an index signature, you can combine it with standard key definitions.
@@ -83,7 +85,6 @@ type ServiceType = {
   id: number;
   [action in ActionType]?: (url: string) => Promise<unknown>;
   [feature in FeatureFlagType]: boolean;
-  // All other added keys, except those defined above, will have a string type
 };
 ```
 
@@ -154,7 +155,7 @@ type CResult3 = {
 };
 ```
 
-The union operation has different results. It is important to remember that the union basically says that the variable's type must match one of the types in the union. So if you look at the key's type level, the results may be different when looking at the whole object. This is important when **destructuring** objects inside your code, as keys will not know their relations from the original types. As before, it is easier to understand with examples.
+The union operation has different results. It is important to remember that the union basically says that the variable's type must match one of the types in the union. So if you look at the key's type level, the results may be different when looking at the whole object. As before, it is easier to understand with examples.
 
 ```ts
 type A = { name: string; surname: string };
@@ -179,7 +180,7 @@ const {
   body, // string | { message: string }
 } = SomeActionTypeObject;
 if (action === "post") {
-  console.log(body, "Losing relation between key types"); // string | { message: string }
+  console.log(body, "Here TS knows I'm a { message: string }");
 }
 
 // Separately, each key is fine, but the whole object does not satisfy either type A2 or B2

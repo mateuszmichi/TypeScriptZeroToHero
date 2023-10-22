@@ -2,11 +2,12 @@
 
 import { fetchItems, FetchItemsResultType } from "./externalLibMock";
 
-// Replace all existing occurrences of this type with proper types
 type XYZ = unknown;
 
+/**
+ * Define AuthorType to match the following types
+ */
 function Exercise1() {
-  // Define AuthorType to match the following types
   type AuthorType = XYZ;
 
   const author1: AuthorType = {
@@ -21,8 +22,10 @@ function Exercise1() {
   };
 }
 
+/**
+ * Define HandlerType to match the following types
+ */
 function Exercise2() {
-  // Define ActionHandlerType to match the following types
   type HandlerType = XYZ;
 
   const actionHandler1: HandlerType = {
@@ -33,9 +36,11 @@ function Exercise2() {
   };
 }
 
+/**
+ * Define TranslationMapper to remove errors
+ */
 function Exercise3() {
   type LanguageType = "en" | "de" | "fr";
-  // Define ActionHandlerType to create the following types
   type TranslationMapper = XYZ;
 
   function translateText(
@@ -47,8 +52,10 @@ function Exercise3() {
   }
 }
 
+/**
+ * Define AcceptedPetsConfigType
+ */
 function Exercise4() {
-  // Define AcceptedPetsConfigType
   type Pets = "dog" | "cat" | "rabbit" | "hamster";
   type AcceptedPetsConfigType = XYZ;
 
@@ -66,8 +73,10 @@ function Exercise4() {
   };
 }
 
+/**
+ * Create a function type that will handle the response
+ */
 async function Exercise5() {
-  // Create a function type that will handle the response
   type ResponseHandler = (items: XYZ) => XYZ;
   const responseHandler: ResponseHandler = (items) => {
     return items.some((i) => i.access);
@@ -79,6 +88,9 @@ async function Exercise5() {
   );
 }
 
+/**
+ * Define type C that is the result of A & B
+ */
 function Exercise6() {
   type A = {
     x: string | number;
@@ -89,14 +101,13 @@ function Exercise6() {
     y?: number;
     z?: 0 | 1;
   };
-  type C = {
-    // Define type C that is the result of A & B
-    x: string | number;
-    y: number;
-    z?: 0 | 1;
-  };
+  type C = {};
 }
 
+/**
+ * Some inspection of the types inside IDE
+ * Use some unique features of specific value type in console.log
+ */
 function Exercise7() {
   type A = {
     action: "post";

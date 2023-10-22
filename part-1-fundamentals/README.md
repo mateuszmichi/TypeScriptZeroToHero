@@ -18,4 +18,4 @@ Learning materials covering each topic can be found in the following files:
 
 ## Exercises
 
-You can go through them step by step or choose the most interesting topics.
+You can go through them step by step or choose the most interesting topics. Don't worry that these files will be marked with errors - part of the exercises is to fix typing inside them.

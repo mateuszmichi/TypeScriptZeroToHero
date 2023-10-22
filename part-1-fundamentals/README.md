@@ -13,6 +13,8 @@ Learning materials covering each topic can be found in the following files:
 
 - [Basic types](https://github.com/mateuszmichi/TypeScriptZeroToHero/blob/main/part-1-fundamentals/1-1-basic-types/README.md)
 - [Functions](https://github.com/mateuszmichi/TypeScriptZeroToHero/blob/main/part-1-fundamentals/1-2-functions/README.md)
+- [Objects](https://github.com/mateuszmichi/TypeScriptZeroToHero/blob/main/part-1-fundamentals/1-3-objects/README.md)
+- [TypeScript Keywords](https://github.com/mateuszmichi/TypeScriptZeroToHero/blob/main/part-1-fundamentals/1-4-ts-keywords/README.md)
 
 ## Exercises
 

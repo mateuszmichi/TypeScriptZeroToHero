@@ -138,3 +138,28 @@ function Exercise7() {
     console.log(`Some unique method for this value type: ${value}`);
   }
 }
+
+/**
+ * Fix type errors using following techniques:
+ * 1. Remove type definition - we don't need to specify this variable shape
+ * 2. Limit keys to needed
+ */
+function Exercise8() {
+  type AuthorType = { name: string; surname: string };
+  const displayAuthor = (author: AuthorType) => {
+    console.log(`Author: ${author.name} ${author.surname}`);
+  };
+
+  const myFavoriteAuthor: AuthorType = {
+    name: "Brandon",
+    surname: "Sanderson",
+    age: 47,
+  };
+  const withSecondName: AuthorType = {
+    ...myFavoriteAuthor,
+    name: "Brandon Winn",
+  };
+
+  displayAuthor(myFavoriteAuthor);
+  displayAuthor(withSecondName);
+}

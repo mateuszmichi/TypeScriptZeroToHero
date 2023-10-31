@@ -189,3 +189,54 @@ const invalidAction: C2 = {
   body: "someBody", // Error - Types of property 'body' are incompatible.
 };
 ```
+
+## Additional Keys Handling
+
+The object type defines which keys are expected and what values they should contain. However, at the same time, it works more like interfaces in other languages, allowing objects to contain more elements than the type expects. This has some implications for the typing of object utility functions.
+
+```ts
+type AuthorType = { name: string; surname: string };
+
+const displayAuthor = (author: AuthorType) => {
+  console.log(`Author: ${author.name} ${author.surname}`);
+};
+
+const myFavoriteAuthor = {
+  name: "Brandon",
+  surname: "Sanderson",
+  // Notice - additional key
+  age: 47,
+};
+
+// Fine, the shape of the object matches
+displayAuthor(myFavoriteAuthor);
+```
+
+On the other hand, TypeScript does not like additional keys when we manually define the object:
+
+```ts
+type AuthorType = { name: string; surname: string };
+
+const myFavoriteAuthor: AuthorType = {
+  name: "Brandon",
+  surname: "Sanderson",
+  age: 47, // Object literal may only specify known properties
+};
+```
+
+But there will be no problem when using an object containing more keys, such as with the spread operator. This error is limited to manual object creation, where we are deliberately adding unexpected keys.
+
+```ts
+type AuthorType = { name: string; surname: string };
+
+const myFavoriteAuthor = {
+  name: "Brandon",
+  surname: "Sanderson",
+  age: 47,
+};
+
+const withSecondName: AuthorType = {
+  ...myFavoriteAuthor,
+  name: "Brandon Winn",
+};
+```

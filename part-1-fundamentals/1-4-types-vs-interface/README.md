@@ -21,7 +21,9 @@ interface AuthorInterface {
 Variables will always match, regardless of whether we use type or interface. Check out the concept of [Duck typing](https://en.wikipedia.org/wiki/Duck_typing):
 
 ```ts
-type BirdType = { wings: 2 };
+type BirdType = {
+  wings: 2;
+};
 interface BirdInterface {
   wings: 2;
 }

@@ -44,9 +44,9 @@ const castedValue3 = value2 as unknown as number; // Fine - but the app crashes
 
 ## Any
 
-These two keywords will help you fix problems with typing when TypeScript itself will not be able to deduce the proper type of the variable. **In most cases**, falling back to using any or as will indicate that something is not properly typed. In some edge cases, you can use these keywords to work around errors. Their usage is common in generic functions.
+Combined with **as** keyword, **any** will help you fix problems with typing when TypeScript itself will not be able to deduce the proper type of the variable. **In most cases**, falling back to using **any** or **as** will indicate that something is not properly typed. In some edge cases, you can use these keywords to work around errors. Their usage is common in generic functions.
 
-**Any** keyword marks a variable that can contain any type of data. TypeScript will not complain when you try to use a property that, for example, is not accessible in some types. Using any neglects all the benefits provided by TypeScript and should be avoided if possible.
+**Any** keyword marks a variable that can contain any type of data. TypeScript will not complain when you try to use a property that, for example, is not accessible in some types. Using any neglects all the benefits provided by TypeScript and should be avoided if possible. Usage of any is just fallback to plain JavaScript without its full freedom and no type safety.
 
 ```ts
 let bucket: any = "I can put anything here";
@@ -58,7 +58,7 @@ console.log(bucket.toUpperCase());
 
 ## Unknown
 
-**Unknown** is a safe version of any. This type indicates a variable whose shape we cannot be sure of. This variable is excellent for marking the value of the response from external sources. TypeScript, in contrast to any, will not allow you to use properties or methods of an unchecked variable. It will force you to write code that safely handles any type of input.
+**Unknown** is a safe version of any. This type indicates a variable whose shape we cannot be sure of. This keyword is excellent for marking the value of the response from external sources. TypeScript, in contrast to any, will not allow you to use properties or methods of an unchecked variable. It will force you to write code that safely handles any type of input.
 
 ```ts
 const response: unknown = getSomeExternalData();

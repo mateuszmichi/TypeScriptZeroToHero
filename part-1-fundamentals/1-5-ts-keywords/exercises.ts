@@ -20,7 +20,7 @@ function Exercise1() {
 }
 
 /**
- * 1. Make the following function safer - use the 'never' keyword.
+ * 1. Make the following function safer - use the 'unknown' keyword.
  * 2. Add a check to safely handle access to data methods.
  */
 function Exercise2() {

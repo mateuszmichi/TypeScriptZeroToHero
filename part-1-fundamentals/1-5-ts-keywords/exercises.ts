@@ -72,7 +72,7 @@ function Exercise4() {
  */
 function Exercise5() {
   const extractPersonalData = (...keys: XYZ) => {
-    let response: XYZ = {};
+    let response = {};
     keys.forEach((key) => {
       response[key] = personalData[key];
     });

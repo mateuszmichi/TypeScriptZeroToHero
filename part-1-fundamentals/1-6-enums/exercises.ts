@@ -7,12 +7,6 @@
  * MacOS
  */
 function Exercise1() {
-  enum OperatingSystem {
-    Windows,
-    Linux,
-    MacOS,
-  }
-
   enum NumberEnum {}
   enum StringEnum {}
 }

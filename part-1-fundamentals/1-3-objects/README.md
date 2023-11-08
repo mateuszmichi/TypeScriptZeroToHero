@@ -10,21 +10,53 @@ type AuthorType = {
   surname: string;
   age: number;
 };
+```
 
-// You can mark keys as optional
+You can mark keys as optional
+
+```ts
 type Book = {
-  title: string;
+  title?: string;
   year?: number;
   author?: Author | Author[];
 };
 
-// Keys containing functions
+const book: Book = {}; // Fine, every key is optional
+```
+
+Be aware that marking using `?` is different from using as a value union containing `undefined`. In the second case you need to create a key with value but `undefined`
+
+```ts
+type OptionalType = {
+  x: string;
+  y?: string;
+};
+const optionalValue: OptionalType = {
+  x: "Some value",
+};
+
+type UndefinedUnionType = {
+  x: string;
+  y: string | undefined;
+};
+const unionValue: UndefinedUnionType = {
+  x: "Some value",
+  y: undefined, // There would be error if we remove this key
+};
+```
+
+There is no problem to define keys containing functions
+
+```ts
 type Shop = {
   id: number;
   isInStock: (book: Book) => boolean;
 };
+```
 
-// In JavaScript, keys can be strings, numbers, or Symbols
+In JavaScript, keys can be strings, numbers, or Symbols
+
+```ts
 type MixedKeys = {
   // Number keys
   0: string;

@@ -54,15 +54,15 @@ Sometimes, you will need to limit accepted values to specific strings or numbers
 ```ts
 let onlyHelloWorld: "Hello" | "World" = "Hello";
 // This assignment will cause an error
-// onlyHelloWorld = "Other string";
+onlyHelloWorld = "Other string";
 
 let onlyTrueOrNull: true | null = true;
 // This assignment will cause an error
-// onlyTrueOrNull = false;
+onlyTrueOrNull = false;
 
 let teamId: 1 | 2 | 3 = 1;
 // This assignment will cause an error
-// teamId = 4;
+teamId = 4;
 ```
 
 ## Arrays

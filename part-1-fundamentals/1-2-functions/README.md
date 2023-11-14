@@ -25,7 +25,7 @@ const rootSquare: RootSquareType = (value) => {
 };
 
 // Inline declaration
-const rootSquare2: RootSquareType = (value: number) => {
+const rootSquare2 = (value: number) => {
   // TypeScript will know that the result is a number from static code analysis
   return value * value;
 };
@@ -54,7 +54,7 @@ const whatIsMyName: WhatIsMyNameType = (surname) => {
 };
 
 // Inline declaration
-const whatIsMyName2: WhatIsMyNameType = (surname?: string) => {
+const whatIsMyName2 = (surname?: string) => {
   return `Tom${surname ? ` ${surname}` : ""}`;
 };
 
@@ -123,7 +123,7 @@ const justThrowError: ThrowingFunctionType = () => {
 };
 
 // Inline declaration - no need to mark (): never
-const justThrowError2: ThrowingFunctionType = () => {
+const justThrowError2 = () => {
   throw new Error("Catch it!");
 };
 ```

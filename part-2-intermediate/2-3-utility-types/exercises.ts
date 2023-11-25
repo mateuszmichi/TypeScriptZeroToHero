@@ -67,9 +67,9 @@ function Exercise2() {
 
 /**
  * Make the following code easier to maintain (only types):
- * 0. Extract common type
- * 1. Enable rendering the area without access to nodes and edges data - for example, prerender while loading
- * 2. Allow updating the graph nodes and edges separately
+ * 1. Extract common type
+ * 2. Enable rendering the area without access to nodes and edges data - for example, prerender while loading
+ * 3. Allow updating the graph nodes and edges separately
  */
 function Exercise3() {
   type GraphData = {
@@ -149,5 +149,28 @@ A (${getXCoordinate(origin.x)}, ${getYCoordinate(origin.y)})
 B (${getXCoordinate(target.x)}, ${getYCoordinate(target.y)})`);
       }
     });
+  };
+}
+
+/**
+ * Implement types for a function handling refunds.
+ * 1. We do not accept wholesale items.
+ */
+function Exercise4() {
+  type BoughtItem = {
+    type: "new" | "used" | "wholesale";
+    price: number;
+    id: number;
+  };
+
+  const refundItem = (item: XYZ) => {
+    // Here would go some logic
+  };
+
+  const tryToRefund = (item: BoughtItem) => {
+    if (item.type === "wholesale") {
+      throw new Error("Contact the sales manager.");
+    }
+    refundItem(item);
   };
 }

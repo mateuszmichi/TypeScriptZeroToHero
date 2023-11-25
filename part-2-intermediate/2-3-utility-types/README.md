@@ -169,3 +169,52 @@ tests.forEach(([args, expectedResult]) =>
   expect(testedUtility(...args)).toBe(expectedResult),
 );
 ```
+
+## Union Transformations
+
+There are also utilities that make working with unions easier.
+
+**Exclude** allows removing specific values from the union type:
+
+```ts
+type VerificationStatusType =
+  | "verified"
+  | "expired"
+  | "invalid"
+  | "already-verified";
+
+const requestPasswordReset = (
+  status: Exclude<VerificationStatusType, "already-verified">,
+) => {
+  // This code can handle all statuses except "already-verified"
+  // status: "verified" | "expired" | "invalid"
+};
+```
+
+**Extract** limits union values to a list of specified possible values:
+
+```ts
+type A = "a" | "b" | "c" | "d";
+type B = "c" | "d" | "e" | "f";
+
+type R = Extract<A, B>; // "c" | "d"
+```
+
+While intersection might be considered, the usage of Extract forces logic for unions as arguments. The difference becomes noticeable when dealing with object types:
+
+```ts
+type A = { b: boolean; s: string };
+type B = { b: boolean; n: number };
+
+type IntersectionC = A & B; // { b: boolean; s: string; n: number; }
+type ExtractionC = Extract<A, B>; // never -> as this utility treats values as unions
+```
+
+Additionally, there is **NonNullable**, which excludes `null` and `undefined` from a passed union:
+
+```ts
+type UserInput = string | number | null | undefined;
+
+type CleanInput1 = Exclude<UserInput, null | undefined>; // string | number
+type CleanInput2 = NonNullable<UserInput>; // string | number
+```

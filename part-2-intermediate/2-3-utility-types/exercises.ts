@@ -1,4 +1,4 @@
-// Basic types
+// Utility types
 
 type XYZ = unknown;
 

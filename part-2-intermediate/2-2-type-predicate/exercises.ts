@@ -1,3 +1,5 @@
+// Type predicate
+
 /**
  * Fix the code to execute it safely
  */

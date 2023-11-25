@@ -115,3 +115,57 @@ type B = Omit<Author, "books" | "birthday">; // A === B
 Choosing the appropriate utility will depend on the context where the reduced object type is being used. Utilize **Pick** when specific keys are expected, such as in a helper function requiring only particular keys. On the other hand, when employing object destructuring and using `...rest` of the object, **Omit** is recommended. Furthermore, Omit can be useful in situations where a part of the object needs to be removed before proceeding with the subsequent code.
 
 Why should we care about using the proper utility if the resulting fragment type is the same? Making these considerations allows us to foresee potential changes and limits modifications for the **Pick** and **Omit** second arguments accordingly. This proactive approach ensures type checking accuracy, ultimately reducing the time required during refactoring or the addition of new features.
+
+## Function Transformation
+
+TypeScript offers built-in utilities that can extract parameters and return types from the provided function type.
+
+```ts
+const exampleFunction = (x: number, y: string) => {
+  return Promise.resolve({ xx: x, yy: y });
+};
+
+type Params = Parameters<typeof exampleFunction>; // [x: number, y: string]
+type Result = ReturnType<typeof exampleFunction>; // Promise<{ xx: number; yy: string; }>
+```
+
+These utilities are not used as often as object utilities, but sometimes we want compatible return types between functions, and we can use these types to enforce such behavior. The following code example will be familiar to Redux users:
+
+```ts
+import { configureStore } from "@reduxjs/toolkit";
+
+const store = configureStore({
+  reducer: {
+    /* ...reducers */
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+
+// Usage where values should be 1:1 to the return type of the store state
+export const thunkExample =
+  (): ThunkAction<Promise<void>, RootState, undefined, AnyAction> =>
+  async (dispatch) => {
+    // thunk implementation
+  };
+
+// Or an example using a hook that forces the marking of the state as compatible with the returned type
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+```
+
+Personally, I sometimes combine **Parameters** and **ReturnType** when writing unit tests for functions. This is useful when I want to test multiple arguments and results simultaneously:
+
+```ts
+import { testedUtility } from "./index";
+
+const tests: Array<
+  [Parameters<typeof testedUtility>, ReturnType<typeof testedUtility>]
+> = [
+  /* I will be forced to pass matching data to function calls */
+];
+
+// This call is now type-safe
+tests.forEach(([args, expectedResult]) =>
+  expect(testedUtility(...args)).toBe(expectedResult),
+);
+```

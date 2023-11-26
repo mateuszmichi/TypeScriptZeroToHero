@@ -42,3 +42,66 @@ function Exercise2() {
       | { same: false; diff: Array<"title" | "date" | "authorId"> };
   };
 }
+
+/**
+ * Use constraints to make this code safe
+ */
+function Exercise3() {
+  // Type of the function
+  type ConvertToFullName<T> = (data: T) => {
+    surname: string /* define rest */;
+  };
+  // How it would be implemented
+  function convertToFullName<T>(data: T): XYZ {
+    const { name, surname, ...rest } = data;
+    return {
+      fullName: `${name} ${surname}`,
+      ...rest,
+    };
+  }
+}
+
+/**
+ * Inspect result type - how does this template work?
+ * Add relations so that we will return only a subset of possible items
+ * Comment usage that does not make sense and produces never | never
+ */
+function Exercise4() {
+  type FilterTemplate<I, O> = {
+    matching: Extract<keyof I, keyof O>[];
+    miss: Exclude<keyof I, keyof O>[];
+  };
+
+  type A = FilterTemplate<{ name: string }, {}>;
+  type B = FilterTemplate<{}, { name: string }>;
+  type C = FilterTemplate<{ name: number; value: "v" }, { name: string }>;
+  type D = FilterTemplate<{ name: string }, { name: number; value: "v" }>;
+}
+
+/**
+ * Use ternary expressions to create a template that will:
+ * 1. Accept only object types
+ * 2. If the key value is a string, it will convert to an object with the same key: string
+ * 3. If the key value is an object - run the same logic (recursive)
+ * 4. Keep arrays intact for now
+ * 5. Other keys will be kept with their original type
+ */
+function Exercise5() {
+  type MapperType<T> = XYZ;
+
+  // Should be { name: { name: string } }
+  type A = MapperType<{ name: string }>;
+  // Should be { age: number, arr: { name: string }[] }
+  type B = MapperType<{ age: number; arr: { name: string }[] }>;
+  /* Nested, should be
+    {
+      parent: {
+        child: { surname: { surname: string } };
+        other: { other: string };
+      }
+    }
+  */
+  type C = MapperType<{
+    parent: { child: { surname: string }; other: string };
+  }>;
+}

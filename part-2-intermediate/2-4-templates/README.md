@@ -78,3 +78,152 @@ type T2 = TransformGenericFun<number>; // (v: number) => any
 type T3 = TransformGenericFun<number, any>; // (v: number) => any
 type T4 = TransformGenericFun<number, string>; // (v: number) => string
 ```
+
+## Constraining Template Argument Type
+
+Not every type will always be compatible to be passed into our newly created template. We can limit the argument using the **extends** expression inside the argument definition:
+
+```ts
+type ExtendString<T extends string> = { value: T };
+
+type A = ExtendString<string>; // { value: string; }
+type B = ExtendString<"subset" | "of" | "strings">; // { value: "subset" | "of" | "strings"; }
+type C = ExtendString<number>; // Error: Type 'number' does not satisfy the constraint 'string'
+```
+
+Here's an example extending an empty object and setting a default value. We can safely use the **keyof** syntax here:
+
+```ts
+type ExtendsObject<T extends object = {}> = { [key in keyof T]: boolean };
+
+type A = ExtendsObject; // {}
+type B = ExtendsObject<{ x: string; y: number }>; // { x: boolean, y: boolean }
+```
+
+Alternatively, we can enforce a specific shape for the object type:
+
+```ts
+type MoreComplicated<T extends { name: string }> = {
+  [key in Exclude<keyof T, "name">]: boolean;
+} & { name: string[] };
+
+type A = MoreComplicated<{ name: string; x: string }>; // { x: boolean, name: string[] }
+type B = MoreComplicated<{ x: string }>; // Error: Type '{ x: string; }' does not satisfy the constraint...
+```
+
+## Adding Relations Between Arguments
+
+Sometimes, a template with multiple arguments needs to maintain a relationship between them to produce a valid result type.
+
+We can set the previous type as the default value for subsequent argument types:
+
+```ts
+type WithRelation<T, S = T> = { first: T; second: S };
+
+type A = WithRelation<string>; // { first: string; second: string }
+type B = WithRelation<string, number>; // { first: string; second: number }
+type C = WithRelation<number>; // { first: number; second: number }
+
+// We are not limited to easy S = T default value
+type WithRelation2<T, S = { value: T }> = { first: T; second: S };
+type D = WithRelation2<number>; // { first: number; second: { value: number } }
+```
+
+We can also use this type within the `extends` syntax:
+
+```ts
+type WithExtends<T extends object, K extends keyof T = keyof T> = {
+  [P in K]: T[P];
+};
+
+type User = { name: string; surname: string; age: number };
+type A = WithExtends<User>; // { name: string; surname: string; age: number; }
+type B = WithExtends<User, "name">; // { name: string; }
+type C = WithExtends<User, "name" | "age">; // { name: string; age: number; }
+```
+
+Something noteworthy in the previous example is `[P in K]: T[P]`. Using this specific `P` key allows access to the specific key, so that we receive its value type on the right side. Utilizing `[key in K]: T[K]` would assign all keys to the right side, resulting in obtaining all possible key value types:
+
+```ts
+type Correct<T extends object, K extends keyof T = keyof T> = {
+  [P in K]: T[P];
+};
+type Wrong<T extends object, K extends keyof T = keyof T> = {
+  [key in K]: T[K];
+};
+
+type User = { name: string; surname: string; age: number };
+type A = Correct<User, "name" | "age">; // { name: string; age: number }
+type B = Wrong<User, "name" | "age">; // {name: string | number; age: string | number }
+```
+
+Here's another example utilizing `extends`:
+
+```ts
+type WithItems<I, D extends { items: I[] }> = {
+  items: I[];
+  rest: Omit<D, "items">;
+};
+
+type A = WithItems<string, { items: string[]; price: number }>; // items: string[], rest: { price: number }
+```
+
+## Conditional Types
+
+Sometimes, specific types require special handling. When creating a template, we can utilize a type equivalent of the ternary operator, denoted by the syntax `extends (...condition) ? (type on match) : (type elsewhere)`.
+
+Let's focus on this feature looking at a few examples. First, consider a template that replaces strings with an array of strings or, otherwise, encapsulates the provided type into an object:
+
+```ts
+type ReplaceStrings<S> = S extends string ? S[] : { value: S };
+
+type A = ReplaceStrings<string>; // string[] - matching
+type B = ReplaceStrings<number>; // { value: number } - else statement
+type C = ReplaceStrings<string[]>; // { value: string[] } - else statement
+```
+
+Next, let's consider a more complex example. We'll create a JSON serializer. This serializer creates an object containing **serialize** and **deserialize** methods. It serializes objects to strings and then deserializes them. While it works well for most data, it requires special handling for **Date** instances. Currently, we'll skip handling arrays as they require more advanced features:
+
+```ts
+type JsonDeserializer<T> = T extends any[]
+  ? never // Arrays are not supported at the moment
+  : T extends object // First, check for objects
+  ? T extends Date // Check for Date instances which will be serialized to strings
+    ? string
+    : { [K in keyof T]: JsonDeserializer<T[K]> } // Serialize object keys
+  : T extends string | number | boolean | null
+  ? T // Keep strings, numbers, booleans, and null intact
+  : never; // Mark other types as unsupported (skipping their usage)
+
+type Serializer<T> = {
+  serialize: (input: T) => JsonDeserializer<T>;
+  deserialize: (cache: JsonDeserializer<T>) => T;
+};
+```
+
+Now, let's see how this behaves when used with some object types:
+
+```ts
+type JsonA = JsonDeserializer<{ name: string; date: Date }>; // { name: string; date: string; }
+type JsonB = JsonDeserializer<{
+  user: { name: string; date: Date };
+}>; // { user: { name: string; date: string; } }
+type JsonC = JsonDeserializer<{ unsupported: string[] }>; // { unsupported: never; }
+type JsonD = JsonDeserializer<{
+  age: number | null;
+  nested: { unsupported: string[]; undef: undefined };
+}>; // { name: number | null; nested: { unsupported: never; undef: never } }
+```
+
+The last example demonstrates how to detect an empty object. We use `extends never` check, which identifies type mismatches and adjusts the final type to resolve issues:
+
+```ts
+type EmptyObjectDetect<T extends object> = keyof T extends never ? null : T;
+
+type EmptyResult = EmptyObjectDetect<{}>; // null
+type NotEmptyResult = EmptyObjectDetect<{ name: string }>; // { name: string }
+```
+
+The trick here is that `keyof {} === "never"`. While these specific checks might be challenging to remember or conceive, the internet and community resources can provide solutions. Once properly written, most of these templates are rarely modified. In the upcoming chapter on _advanced templates_, we'll explore more techniques used within these templates.
+
+If you feel overwhelmed, don't worry. We'll become more familiar with the `extends` syntax in the section on _generic functions_. Defining generic type templates is more abstract than adjusting response types based on input manipulation logic.

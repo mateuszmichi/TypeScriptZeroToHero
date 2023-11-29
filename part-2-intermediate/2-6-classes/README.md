@@ -67,3 +67,60 @@ class Rectangle {
 const rect = new Rectangle();
 rect.area; // number
 ```
+
+## Interface Implementation
+
+A class can be made to implement an interface (or corresponding object type) by using the `implements` keyword within the class definition:
+
+```ts
+interface WithArea {
+  getArea(): number;
+}
+
+class Rectangle implements WithArea {
+  height = 0;
+  width = 0;
+
+  getArea() {
+    return this.height * this.width;
+  }
+}
+```
+
+TypeScript checks whether your class instance matches the required object shape. However, it doesn't add additional context to the interface. Therefore, we must f.e. specify the types of arguments within the interface's function definition:
+
+```ts
+interface WithCircumferenceCheck {
+  checkCircumference: (value: number) => boolean;
+}
+
+class Rectangle implements WithCircumferenceCheck {
+  height = 0;
+  width = 0;
+
+  // This is an invalid implementation!
+  // However, the final instance will match WithCircumferenceCheck
+  // Therefore, TypeScript won't complain - by default it would treat checkCircumference as:
+  // `checkCircumference: (value: any) => boolean`
+  checkCircumference(value) {
+    value.toLowerCase(); // Would cause an error if called with number
+    return value >= 2 * (this.height + this.width);
+  }
+}
+```
+
+The correct implementation should copy the function definition and implement it like this:
+
+```ts
+checkCircumference(value: number) {
+  return value >= 2 * (this.height + this.width);
+}
+```
+
+It's also possible to implement multiple interfaces simultaneously:
+
+```ts
+class Rectangle implements WithCircumferenceCheck, WithArea {
+  /* implementation */
+}
+```

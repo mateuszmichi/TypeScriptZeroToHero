@@ -15,3 +15,29 @@ function Exercise1() {
   point.getQuadrant();
   point.distance.toFixed();
 }
+
+/**
+ * Add interfaces to the class and implement them
+ */
+function Exercise2() {
+  interface WithFullName {
+    fullName: string;
+  }
+
+  // We can implement an object type as well
+  interface WithMatureCheck {
+    isAdult: (regulation?: number) => boolean;
+  }
+
+  class Person {
+    age: number;
+    name: string;
+    surname: string;
+
+    constructor(name: string, surname: string, age = 0) {
+      this.age = age;
+      this.name = name;
+      this.surname = surname;
+    }
+  }
+}

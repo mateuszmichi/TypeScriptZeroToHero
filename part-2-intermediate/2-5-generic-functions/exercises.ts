@@ -13,7 +13,7 @@ import { Template, sendEmail } from "./externalLibMock";
  * Create a generic function that will return the passed value as a promise.
  * Extra consideration: what should be done with passed Promises?
  */
-function Exercise1(value) {
+export function Exercise1(value) {
   // Your implementation here
 }
 
@@ -25,7 +25,7 @@ function Exercise1(value) {
  *
  * Use Template and sendEmail imported from the './externalLibraryMock' file.
  */
-function Exercise2(template, data, recipients): Promise<string[]> {
+export function Exercise2(template, data, recipients) {
   // Your implementation here
 }
 
@@ -34,7 +34,7 @@ function Exercise2(template, data, recipients): Promise<string[]> {
  * The function should accept a list of items of a specific type
  * and a function that maps items of the input type to the return type.
  */
-function Exercise3(items, mapper) {
+export function Exercise3(items, mapper) {
   // Your implementation here
 }
 
@@ -49,7 +49,7 @@ function Exercise3(items, mapper) {
  * }
  * Treat undefined and missing keys as the same (for simplicity).
  */
-function Exercise4(a, b) {
+export function Exercise4(a, b) {
   // Your implementation here
 }
 
@@ -66,7 +66,7 @@ function Exercise4(a, b) {
  *
  * See usage example below - we are going to use step keyguard technique.
  */
-function Exercise5(initialState) {
+export function Exercise5(initialState) {
   // Your implementation here
 }
 

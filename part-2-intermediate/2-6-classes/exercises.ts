@@ -41,3 +41,26 @@ function Exercise2() {
     }
   }
 }
+
+/**
+ * Implement a class that represents a DOM element selector
+ * 1. It should be initialized either by providing an id (string)
+ * 2. Or by providing a configuration with a data- key and its value (see usage)
+ * 3. The class should have a method returning a specific DOMElement (see usage)
+ * 3a. We can use document.querySelector<> for this example
+ * 3b. We can initialize the query inside the constructor and reuse it
+ */
+function Exercise3() {
+  class DOMSelector {}
+
+  // Following code should have no errors
+  const selector1 = new DOMSelector("myId");
+  const elem1 = selector1.getElement(); // Should have Element | null
+
+  const selector2 = new DOMSelector<HTMLInputElement>({
+    dataKey: "data-testid",
+    value: "myTestId",
+  });
+  const elem2 = selector2.getElement(); // Should have HTMLInputElement | null
+  if (elem2) elem2.value.toUpperCase();
+}

@@ -64,3 +64,69 @@ function Exercise3() {
   const elem2 = selector2.getElement(); // Should have HTMLInputElement | null
   if (elem2) elem2.value.toUpperCase();
 }
+
+type EmployeeType = "Manager" | "Developer";
+
+/**
+ * Implement missing parts of code.
+ * Manager and Developer should inherit from Employee.
+ */
+function Exercise4() {
+  class Employee {
+    name: string;
+    role: EmployeeType;
+
+    constructor(name: string, role: EmployeeType) {
+      this.name = name;
+      this.role = role;
+    }
+
+    getDetails() {
+      return `Name: ${this.name}, Role: ${this.role}`;
+    }
+  }
+
+  class Manager {
+    teams: number;
+
+    constructor(name: string, teams: number) {
+      // Implement me
+    }
+
+    getDetails() {
+      // Implement me
+      // return `${}, Taking care of: ${} teams`;
+    }
+
+    manageTeam() {
+      return `Managing the team`;
+    }
+  }
+
+  class Developer {
+    techStack: string[];
+
+    constructor(name: string, techStack: string[]) {
+      // Implement me
+    }
+
+    getDetails() {
+      // Implement me
+      // return `${}, Tech Stack: ${}`;
+    }
+
+    writeCode() {
+      return `Writing code`;
+    }
+  }
+
+  // Creating instances
+  const manager = new Manager("Alice", 5);
+  const developer = new Developer("Bob", ["JavaScript", "Python"]);
+
+  console.log(manager.getDetails()); // Output: Name: Alice, Role: Manager, Taking care of: 5 teams
+  console.log(manager.manageTeam()); // Output: Managing the team
+
+  console.log(developer.getDetails()); // Output: Name: Bob, Role: Developer, Tech Stack: JavaScript, Python
+  console.log(developer.writeCode()); // Output: Writing code
+}

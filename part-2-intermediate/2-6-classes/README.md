@@ -256,3 +256,189 @@ class Point implements WithMove {
 ```
 
 In the example above, we are also enforcing a return type for the function.
+
+## Inheritance in TypeScript
+
+The mechanism of inheritance remains the same as in standard JavaScript. Here, we focus on how this mechanism interacts with our type system. For a more in-depth understanding of how inheritance works, you can refer to (this JavaScript tutorial)[https://javascript.info/class-inheritance] on classes.
+
+TypeScript uses the `extends` keyword in the same way as JavaScript to indicate that a class is extending another class. Let's examine this example:
+
+```ts
+class Animal {
+  move() {
+    console.log("Moving!");
+  }
+}
+
+class Dog extends Animal {
+  woof() {
+    console.log("woof!");
+  }
+}
+
+const d = new Dog();
+d.move(); // Base class method
+d.woof(); // Derived class method
+```
+
+We can override a method present in the base class:
+
+```ts
+class Animal {
+  move() {
+    console.log("Moving!");
+  }
+}
+
+class Dog extends Animal {
+  move(times?: number) {
+    for (let i = 0; i <= (times || 1); i++) {
+      console.log("Moving on my paws!");
+    }
+  }
+}
+
+const d = new Dog();
+d.move(); // Triggers overridden method
+d.move(3); // Triggers overridden method
+```
+
+We needed to define `move` method as accepting also `undefined` argument, as this is required to match contract from base class.
+
+## Overriding properties
+
+Sometimes, derived classes have properties with a more strict type than those in the base class:
+
+```ts
+class Base {
+  x?: number | string;
+}
+
+class Derived extends Base {
+  x?: number;
+}
+```
+
+In the `Derived` class, we can specify that `x` is more strict, but we cannot make it more generic as TypeScript ensures that our derived class adheres to the base class contract.
+
+There is a potential problem with the above implementation. It becomes visible when we use` useDefineForClassFields: true` in the TypeScript compilation configuration. Let's examine this code example:
+
+```ts
+class Base {
+  x?: number | string;
+
+  constructor(x?: number) {
+    this.x = x;
+  }
+}
+
+class Derived extends Base {
+  x?: number;
+}
+```
+
+This will result in the following ECMAScript-compliant code:
+
+```js
+const _defineArgs = {
+  enumerable: true,
+  configurable: true,
+  writable: true,
+  value: void 0,
+};
+class Base {
+  constructor(x) {
+    Object.defineProperty(this, "x", _defineArgs);
+    this.x = x;
+  }
+}
+class Derived extends Base {
+  constructor() {
+    super(...arguments);
+    // This overrides "x"! It's value would get deleted
+    Object.defineProperty(this, "x", _defineArgs);
+  }
+}
+```
+
+The code in `Derived` constructor will override `x` property from `Base`. If this is intentional, we should add an initializer. In our example, to avoid this issue, we should use declare syntax, designed to overcome the problem of restricting properties without reinitializing them:
+
+```ts
+class Base {
+  x?: number | string;
+
+  constructor(x?: number) {
+    this.x = x;
+  }
+}
+
+class Derived extends Base {
+  declare x?: number;
+}
+```
+
+Using `declare` in such cases will ensure it works correctly in every scenario.
+
+## Super in TypeScript
+
+We can access base class methods using the `super` keyword, which functions the same way it does in JavaScript. TypeScript ensures that we pass proper values to the base methods:
+
+```ts
+class Rectangle {
+  _width: number;
+  _height: number;
+
+  get width() {
+    return this._width;
+  }
+  get height() {
+    return this._height;
+  }
+
+  set width(value: number) {
+    this._width = value;
+  }
+  set height(value: number) {
+    this._height = value;
+  }
+
+  getInfo() {
+    return `This is a rectange.`;
+  }
+
+  constructor(width: number, height: number) {
+    this._width = width;
+    this._height = height;
+  }
+}
+
+class Square extends Rectangle {
+  constructor(size: number) {
+    // Using base constructor
+    super(size, size);
+  }
+
+  getInfo() {
+    // Using base methods
+    return `${super.getInfo()} I am also a square.`;
+  }
+
+  // Using base setters and getters
+  set width(value: number) {
+    super.width = value;
+    super.height = value;
+  }
+  set height(value: number) {
+    super.width = value;
+    super.height = value;
+  }
+  get width() {
+    return super.width;
+  }
+  get height() {
+    return super.height;
+  }
+}
+```
+
+A note to consider - when overriding setters / getters, we must define corresponding getters / setters as well; otherwise, they will get deleted. They are defined together under the hood. JavaScript is not the most intuitive OOP language, and while TypeScript makes it safer to work with, it doesn't eliminate all language-specific "features".

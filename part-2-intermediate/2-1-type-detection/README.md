@@ -81,7 +81,7 @@ if (typeof value === "object" && value !== null) {
 }
 ```
 
-This check is useful in many situations. It would be much easier to start checking for other types of variables and be left with the object type at the end:
+This check isn't useful in most of the situations. It would be much easier to start checking for other types of variables and be left with the object type at the end:
 
 ```ts
 const exampleFunction = (user: { name: string } | string | null) => {

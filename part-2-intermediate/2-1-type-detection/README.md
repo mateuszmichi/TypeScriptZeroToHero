@@ -99,7 +99,7 @@ const exampleFunction = (user: { name: string } | string | null) => {
 };
 ```
 
-We learned how to detect an object type in a union containing object types and basic types. There is a problem differentiating between object types inside a tuple. Sometimes we can do it by checking the type of specific keys:
+We learned how to detect an object type in a union containing basic types and one object type. There is however a problem differentiating between multiple object types. Sometimes we can safely execute the code by checking the type of specific keys:
 
 ```ts
 type A = { x: string; y: string[] };

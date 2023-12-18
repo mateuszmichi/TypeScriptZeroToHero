@@ -57,7 +57,7 @@ x; // string
 
 ## Specifying Return Type
 
-The example with an identity function was a simple problem that could nicely demonstrate how a generic function works. We _could not define_ the return type, and TypeScript would deduce the result type based on the code. However, generic functions are _rarely so simple_. Sometimes, we need to use **any** and **as** if TypeScript is unable to deduce the general type of the variable inside complex and abstract code. Additionally, defining a return type is necessary to provide clear type hints for the final users.
+The example with an identity function was a simple problem that could nicely demonstrate how a generic function works. We _were able to skip definition_ of the return type, and TypeScript would deduce the result type based on the code. However, generic functions are _rarely so simple_. Sometimes, we need to use **any** and **as** if TypeScript is unable to deduce the general type of the variable inside complex and abstract code. Additionally, defining a return type is necessary to provide clear type hints for the final users.
 
 Let's start with something easy. We will create a function that will accept any kind of input. If it is a number, it will be converted to a string:
 
@@ -86,7 +86,7 @@ function fixedNum2Str<T>(input: T): T extends number ? string : T {
 }
 ```
 
-TypeScript was not able to deduce that we are following proper code and forced us to add an `as any` workaround. This will happen quite often inside generic functions. Now we have:
+TypeScript was not able to deduce that we are implementing proper code and forced us to add an `as any` workaround. This will happen quite often inside generic functions. Now we have:
 
 ```ts
 const a = fixedNum2Str("text"); // "text"

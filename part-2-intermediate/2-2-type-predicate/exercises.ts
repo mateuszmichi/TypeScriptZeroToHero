@@ -4,7 +4,7 @@
  * Fix the code to execute it safely
  */
 function Exercise1(): string[] {
-  const items = new Array(20)
+  const items: Array<string | null> = new Array(20)
     .fill(0)
     .map(() => (Math.random() > 0.5 ? "Some string" : null));
 

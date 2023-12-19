@@ -3,7 +3,7 @@
 type XYZ = unknown;
 
 /**
- * Create a generic type that could represent the following types
+ * Create a generic type that could represent the following family of types
  */
 function Exercise1() {
   type UserDetailsResponse = {
@@ -17,7 +17,7 @@ function Exercise1() {
 }
 
 /**
- * Create generic types that could represent the following types
+ * Create generic types that could represent the following family of types
  */
 function Exercise2() {
   type UserData = { id: number; username: string };
@@ -63,7 +63,6 @@ function Exercise3() {
 
 /**
  * Inspect result type - how does this template work?
- * Add relations so that we will return only a subset of possible items
  * Comment usage that does not make sense and produces never | never
  */
 function Exercise4() {

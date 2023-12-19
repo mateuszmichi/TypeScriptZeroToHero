@@ -47,12 +47,13 @@ function Exercise2() {
  * Use constraints to make this code safe
  */
 function Exercise3() {
-  // Type of the function
-  type ConvertToFullName<T> = (data: T) => {
-    surname: string /* define rest */;
+  // Type of the return type
+  type ConvertToFullNameResult<T> = {
+    fullName: string /* define rest */;
   };
+
   // How it would be implemented
-  function convertToFullName<T>(data: T): XYZ {
+  function convertToFullName<T>(data: T): ConvertToFullNameResult<T> {
     const { name, surname, ...rest } = data;
     return {
       fullName: `${name} ${surname}`,

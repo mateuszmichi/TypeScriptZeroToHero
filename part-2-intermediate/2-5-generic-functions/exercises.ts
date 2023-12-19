@@ -6,7 +6,8 @@ import { Template, sendEmail } from "./externalLibMock";
   For each function, there are some basic unit tests added.
   To run them, install the node modules using `yarn install`
   and run the following command inside the terminal (root of project):
-  `TODO`
+  `yarn jest -t ./part-2-intermediate/2-5-generic-functions/exercises.ts`
+  You will need to comment out not finished exercises
 */
 
 /**

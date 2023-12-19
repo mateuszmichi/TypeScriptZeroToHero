@@ -38,7 +38,7 @@ function Exercise1() {
 
 /**
  * Make the code from the previous example more natural:
- * 1. Save achievement should not take data and id but return it after creation
+ * 1. Save achievement should not take date and id but return it after creation
  * 2. Create achievement should require description and title
  * 3. Make saveAchievement return a promise simulating an API call
  */

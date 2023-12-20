@@ -25,6 +25,7 @@
   },
   "scripts": {
     "format": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "jest"
   }
 }

@@ -22,6 +22,15 @@ Learning materials covering each topic can be found in the following files:
 - [TypeScript Keywords](part-1-fundamentals/1-5-ts-keywords/README.md)
 - [Enums](part-1-fundamentals/1-6-enums/README.md)
 
+**Intermediate (part 2)**
+
+- [Type Detection](part-2-intermediate/2-1-type-detection/README.md)
+- [Type Predicate](part-2-intermediate/2-2-type-predicate/README.md)
+- [Built-in Utilities](part-2-intermediate/2-3-utility-types/README.md)
+- [Templates](part-2-intermediate/2-4-templates/README.md)
+- [Generic Functions](part-2-intermediate/2-5-generic-functions/README.md)
+- [Classes](part-2-intermediate/2-6-classes/README.md)
+
 ## Exercises
 
 You can go through them step by step or choose the most interesting topics. Don't worry that these files will be marked with errors - part of the exercises is to fix typing inside them.

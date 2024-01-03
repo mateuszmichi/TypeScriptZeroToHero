@@ -203,7 +203,7 @@ const asyncReturning = async () => {
 };
 
 // Inline definition - without wrapping the string in a promise will cause an error
-const asyncReturning2 = async (): Promise<string> => {
+const asyncReturning2 = async (): Promise<number> => {
   const value = await Promise.resolve(Math.random());
   return value;
 };
